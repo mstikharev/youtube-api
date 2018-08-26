@@ -45,10 +45,10 @@
 from lib import YoutubeAPI
 
 # Инициализация апи. В аргументы передается developer key
-yc = YoutubeAPI('AIzaSyAD2ggZZwCyYSvz4tpg4pFK9FCPTncPos4')
+yc = YoutubeAPI(your_dev_key)
 
 # Получение ID канала
-ch_id = yc.parse_channel_id('https://www.youtube.com/channel/UCvKPc71Dd8qnuKZd2nRyH4g')
+ch_id = yc.parse_channel_id(chennel_url)
 
 # Получение списка плейлистов канала
 a = yc.get_channel_playlists(ch_id=ch_id)
