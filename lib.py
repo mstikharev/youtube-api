@@ -65,17 +65,18 @@ class YoutubeAPI:
         except Exception as e:
             print('Failed to collect playlists item info: {}'.format(e))
             return None
-        for video in result:
+
+        def map_callback(video):
             try:
                 video_info: dict = self.api_client.videos() \
                     .list(part='snippet,contentDetails,statistics', id=video.get('contentDetails').get('videoId')) \
-                        .execute().get('items')[0]
+                    .execute().get('items')[0]
                 video_snippet = video_info.get('snippet')
                 video_statistics = video_info.get('statistics')
             except Exception as e:
                 print('Failed to collect video info: {}'.format(e))
                 return None
-            yield {
+            return {
                 "title": video_snippet.get('title'),
                 "description": video_snippet.get('description'),
                 "imgUrl": video_snippet.get('thumbnails').get('default').get('url'),
@@ -88,4 +89,6 @@ class YoutubeAPI:
                     "commentCount": video_statistics.get('commentCount')
                 }
             }
+
+        return map(map_callback, result)
 
