@@ -1,8 +1,8 @@
 ## Youtube api for stikpro
 Библиотека для работы с API YouTube. Сделано для скрапера YouTube.
 
-**Зависимости:**
-* `apiclient`
+**Установка:**
+* `pip install git+https://github.com/fn12gl34/youtube-api`
 
 **Содержит функции:**
 * `parse_channel_id` - принимает на вход URL канала, возвращает айди канала для работы библиотеки
