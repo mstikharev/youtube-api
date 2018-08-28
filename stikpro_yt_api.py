@@ -19,8 +19,8 @@ class YoutubeAPI:
         except Exception as e:
             print('Failed build youtube api client: {}'.format(e))
 
-    @classmethod
-    def parse_channel_id(cls, channel_link: str) -> str or None:
+    @staticmethod
+    def parse_channel_id(channel_link: str) -> str or None:
         id_pos: int = channel_link.find('channel/')
         if id_pos == -1:
             return None
