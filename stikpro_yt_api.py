@@ -82,6 +82,7 @@ class YoutubeAPI:
                 "imgUrl": video_snippet.get('thumbnails').get('default').get('url'),
                 "tags": video_snippet.get('tags'),
                 "defaultAudioLanguage": video_info.get('defaultAudioLanguage'),
+                "video_id": video_info.get('id'),
                 "statistics": {
                     "viewCount": video_statistics.get('viewCount'),
                     "likeCount": video_statistics.get('likeCount'),
