@@ -58,10 +58,10 @@ class YoutubeAPI:
             return None
         return list(map(lambda x: x.get('id'), result.get('items')))
 
-    def get_videos_from_playlist(self, pl_id: str, max_results: int = 25) -> list or None:
+    def get_videos_from_playlist(self, pl_id: str, max_results: int = 25, next_page_token: str=None) -> list or None:
         try:
             result: dict = self.api_client.playlistItems() \
-                .list(part='snippet,contentDetails', maxResults=max_results, playlistId=pl_id).execute().get('items')
+                .list(part='snippet,contentDetails', maxResults=max_results, playlistId=pl_id, pageToken=next_page_token).execute().get('items')
         except Exception as e:
             print('Failed to collect playlists item info: {}'.format(e))
             return None
