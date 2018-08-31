@@ -20,7 +20,10 @@ class YoutubeAPI:
             print('Failed build youtube api client: {}'.format(e))
 
     @staticmethod
-    def parse_channel_id(channel_link: str) -> str or None:
+    def parse_channel_id(api_client_arg, channel_link: str) -> str or None:
+        if channel_link.count('/user/') != 0:
+            result = api_client_arg.api_client.channels().list(part='snippet,contentDetails,statistics', forUsername=channel_link[channel_link.find('user/') + 5:]).execute()
+            return result.get('items')[0].get('id')
         id_pos: int = channel_link.find('channel/')
         if id_pos == -1:
             return None
@@ -58,13 +61,13 @@ class YoutubeAPI:
             return None
         return list(map(lambda x: x.get('id'), result.get('items')))
 
-    def get_videos_from_playlist(self, pl_id: str, max_results: int = 25, next_page_token: str=None) -> list or None:
+    def get_videos_from_playlist(self, pl_id: str, max_results: int = 25, next_page_token: str = None) -> list:
         try:
             result: dict = self.api_client.playlistItems() \
                 .list(part='snippet,contentDetails', maxResults=max_results, playlistId=pl_id, pageToken=next_page_token).execute()
         except Exception as e:
             print('Failed to collect playlists item info: {}'.format(e))
-            return None
+            return []
 
         def map_callback(video):
             try:
